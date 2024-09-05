@@ -1,19 +1,28 @@
-function asyncfunction () {
-    return new Promise((resolve, reject) => {
-        setTimeout
-        (()=>{
-            console.log("some data1")
-            resolve(success);
-
-        }, 4000);
-    });
-    
+// Fetch and display tasks
+async function displayTasks() {
+    try {
+        let tasks = await fetchTasks();
+        console.log('Tasks:', tasks);
+        // Display tasks in the console or update UI
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+    }
 }
 
-console.log("fetching data1");
-let p1 =asyncfunction();
-p1.then((res) =>{
-    console.log(res);
+// Add and display a new task
+async function addNewTask(taskText) {
+    try {
+        let newTask = await addTask(taskText);
+        console.log('Added Task:', newTask);
+        // Fetch and display updated tasks
+        await displayTasks();
+    } catch (error) {
+        console.error('Error adding task:', error);
+    }
 }
 
-);
+// Run the application
+(async function runApp() {
+    await displayTasks();
+    await addNewTask('Learn async/await');
+})();
